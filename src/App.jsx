@@ -5,14 +5,22 @@ import { UsersList } from './componentes/usersList'
 
 function App() {
   const [users, setUsers] = useState([]);
+
   const [showColors, SetshowColors] = useState(false)
+
   const [sortByCountry, setSortBuCountry] = useState(false);
+
   const toggleSortByCountry =()=>{{setSortBuCountry(prevState => !prevState)}}
+
   const toogleColor = ()=>{
     SetshowColors(!showColors)
   }
   const api = "https://randomuser.me/api?results=100"
   
+  const handleDelete = (email) =>{
+    const filteredUsers = users.filter((user)=> user.email !== email)
+    setUsers(filteredUsers)
+  }
   useEffect (()=>{
     fetch(api)
     .then( async res => await res.json()) 
@@ -44,7 +52,7 @@ function App() {
         </header>
 
         <main>
-        <UsersList showColors={showColors} users={sortedUsers}/>
+        <UsersList deleteUsers={handleDelete} showColors={showColors} users={sortedUsers}/>
         </main>
       </div>
   )

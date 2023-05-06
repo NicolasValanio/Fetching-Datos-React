@@ -4,8 +4,9 @@ import React from "react"
 interface Props {
     users : Result[]
     showColors : boolean
+    deleteUsers: (email : string) =>void
 }
- export function UsersList ({showColors,users} : Props) {
+ export function UsersList ({deleteUsers,showColors,users} : Props) {
     return(
         <div> 
         <table width="100%">
@@ -25,7 +26,7 @@ interface Props {
                         const backgroundColor = index % 2 === 0 ? '#333' : '#555'
                         const color = showColors ? backgroundColor : 'transparent'
                         return(
-                            <tr key={index} style={ {backgroundColor : color}}>
+                            <tr key={user.email} style={ {backgroundColor : color}}>
                                 <td>
                                     <img src={user.picture.thumbnail} />
                                 </td>
@@ -39,7 +40,9 @@ interface Props {
                                     {user.location.country}
                                 </td>
                                 <td>
-                                    <button>Borrar</button>
+                                    <button onClick={()=>{
+                                        deleteUsers(user.email)
+                                    }}>Borrar</button>
                                 </td>
                             </tr>
                         )
